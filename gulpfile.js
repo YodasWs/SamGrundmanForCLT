@@ -178,7 +178,9 @@ options = {
 'hex-length': [
 	2, { style: 'long' }
 ],
-'hex-notation': 1,
+'hex-notation': [
+	1, { style: 'uppercase' }
+],
 'indentation': [
 	2, { size: 'tab' }
 ],
@@ -262,10 +264,17 @@ options = {
 	},
 	dest: 'docs/',
 	rmLines:{
-		filters:[
-			/^[\'"]use strict[\'"];$/,
-			/^\s*$/
-		]
+		css:{
+			filters:[
+				/^@import /,
+			]
+		},
+		js:{
+			filters:[
+				/^[\'"]use strict[\'"];$/,
+				/^\s*$/,
+			]
+		},
 	},
 	concat:{
 		css:{
@@ -276,16 +285,16 @@ options = {
 		}
 	},
 	server:{
-		path: '/personal-accountant/',
+		path: '/SamGrundmanForCLT/',
 		directoryListing: false,
 		defaultFile: 'index.html',
 		fallback: 'index.html',
-		// Ugh, can't watch on Windows yet >_<
-		// livereload: true,
+		livereload: true,
 		port: argv.port,
 	},
 	sort:{
 		css:[
+			'css/**/*.{sa,sc,c}ss',
 			'main.scss',
 			'components/**/*.{sa,sc,c}ss',
 			'**/*.{sa,sc,c}ss',
@@ -350,9 +359,9 @@ function runTasks(task) {
 			'lintSass',
 			'sort',
 			'concat',
+			'rmLines',
 			'compileSass',
 			'prefixCSS',
-			'rmLines',
 		],
 		fileType: 'css'
 	},
@@ -518,7 +527,6 @@ angular.module('${camelCase('comp-'+argv.name)}')
 gulp.task('default', gulp.series(
 	'lint',
 	'compile',
-	'serve'
-	// Ugh, can't watch on Windows yet >_<
-//	,'watch'
+	'serve',
+	'watch'
 ))
