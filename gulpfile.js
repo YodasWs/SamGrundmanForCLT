@@ -12,6 +12,13 @@ function camelCase(name) {
 
 const argv = require('yargs')
 	.usage("\n\x1b[1mUsage:\x1b[0m gulp \x1b[36m<command>\x1b[0m \x1b[34m[options]\x1b[0m")
+	.command('init', 'Initialize app', {
+		name: {
+			describe: 'Name for your app',
+			required: true,
+			alias: 'n',
+		},
+	})
 	.command(['serve', '*'], 'Compile files and start server', {
 		port: {
 			describe: 'The server port to listen to',
@@ -44,6 +51,7 @@ const argv = require('yargs')
 
 const gulp = require('gulp'),
 	path = require('path'),
+	fileExists = require('file-exists'),
 
 plugins = require('gulp-load-plugins')({
 	rename:{
@@ -522,6 +530,126 @@ angular.module('${camelCase('comp-'+argv.name)}')
 			.pipe(gulp.dest(`./src/components/${argv.name}`))
 	},
 	// TODO: Add to app.module.js
+	plugins.cli([
+		`git status`,
+	])
+))
+
+gulp.task('init:win', () => {
+})
+
+gulp.task('init', gulp.series(
+	plugins.cli([
+		`mkdir -pv ./src`,
+		`mkdir -pv ./docs`,
+		`mkdir -pv ./src/pages`,
+		`mkdir -pv ./src/includes`,
+		`mkdir -pv ./src/includes/header`,
+	]),
+
+	(done) => {
+		if (fileExists.sync('src/index.html')) {
+			done()
+			return
+		}
+		const str = `<!DOCTYPE html>
+<html lang="en-US" ng-app="${argv.name}">
+<head>
+<!--#include file="includes/head-includes.html" -->
+<title>${argv.name}</title>
+</head>
+<body ng-cloak>
+<!--#include file="includes/header/header.html" -->
+<main ng-view></main>
+</body>
+</html>\n`
+		return plugins.newFile(`index.html`, str, { src: true })
+			.pipe(gulp.dest(`./src`))
+	},
+
+	(done) => {
+		if (fileExists.sync('src/main.scss')) {
+			done()
+			return
+		}
+		const str = `* { box-sizing: border-box; }\n
+:root { font-family: 'Trebuchet MS', 'Open Sans', 'Helvetica Neue', sans-serif; }\n
+html {\n\theight: 100%;\n\twidth: 100%;\n\tbackground: whitesmoke;\n}\n
+body {\n\tmargin: 0 auto;\n\twidth: 100%;\n\tmax-width: 1200px;\n\tborder: solid black;\n\tborder-width: 0 1px;\n\tmin-height: 100%;\n\tbackground: white;\n
+\t> * {\n\t\tpadding: 5px calc(5px * 2.5);\n\t}\n}\n
+h1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n\tmargin: 0;\n}\n
+a:link,\na:visited {\n\tcolor: dodgerblue;\n}\n`
+		return plugins.newFile(`main.scss`, str, { src: true })
+			.pipe(gulp.dest(`./src`))
+	},
+
+	(done) => {
+		if (fileExists.sync('src/app.js')) {
+			done()
+			return
+		}
+		const str = `'use strict';\n
+angular.module('${argv.name}', [\n\t'ngRoute',\n])
+.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+	$locationProvider.html5Mode(true)
+	$routeProvider.when('/', {\n\t\ttemplateUrl: 'pages/home.html',\n\t})
+	.otherwise({redirectTo: '/'})
+}])\n`
+		return plugins.newFile(`app.js`, str, { src: true })
+			.pipe(gulp.dest(`./src`))
+	},
+
+	(done) => {
+		if (fileExists.sync('src/includes/hdeader/header.html')) {
+			done()
+			return
+		}
+		const str = `<header>\n\t<h1>${argv.name}</h1>\n</header>\n<nav hidden>\n\t<a href=".">Home</a>\n</nav>\n`
+		return plugins.newFile(`header.html`, str, { src: true })
+			.pipe(gulp.dest(`./src/includes/header`))
+	},
+
+	(done) => {
+		if (fileExists.sync('src/includes/header/header.scss')) {
+			done()
+			return
+		}
+		const str = `body > header {\n\tcolor: $header-color;\n\tbackground: $header-bg;\n
+\th1 {\n\t\tmargin: 0;\n\t}\n\n\th2 {\n\t\tcolor: $header-second-color;\n\t}\n}\n
+body > nav {\n\tdisplay: flex;\n\tflex-flow: row wrap;\n\tjustify-content: space-between;
+\talign-content: flex-start;\n\talign-items: flex-start;\n
+\t> * {\n\t\tdisplay: block;\n\t}\n\n\t&[hidden] {\n\t\tdisplay: none;\n\t}\n}\n`
+		return plugins.newFile(`header.scss`, str, { src: true })
+			.pipe(gulp.dest(`./src/includes/header`))
+	},
+
+	(done) => {
+		if (fileExists.sync('src/includes/head-includes.html')) {
+			done()
+			return
+		}
+		const str = `<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<base href="/SamGrundmanForCLT/"/>
+<link rel="stylesheet" href="min.css"/>
+<script src="res/jquery.min.js"></script>
+<script src="res/angular.min.js"></script>
+<script src="res/angular-route.min.js"></script>
+<script src="min.js"></script>\n`
+		return plugins.newFile(`head-includes.html`, str, { src: true })
+			.pipe(gulp.dest(`./src/includes`))
+	},
+
+	(done) => {
+		if (fileExists.sync('src/pages/home.html')) {
+			done()
+			return
+		}
+		const str = `<h1>Home</h1>\n`
+		return plugins.newFile(`home.html`, str, { src: true })
+			.pipe(gulp.dest(`./src/pages`))
+	},
+
 	plugins.cli([
 		`git status`,
 	])
