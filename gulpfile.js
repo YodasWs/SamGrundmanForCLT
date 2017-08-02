@@ -43,25 +43,28 @@ const argv = require('yargs')
 	.argv
 
 const gulp = require('gulp'),
-	cli = require('gulp-run-command').default,
 	path = require('path'),
 
-plugins = {
-	server: require('gulp-webserver'),
-	prefixCSS: require('gulp-autoprefixer'),
-	sourcemaps: require('gulp-sourcemaps'),
-	compileHTML: require('gulp-htmlmin'),
-	lintHTML: require('gulp-html-lint'),
-	lintSass: require('gulp-sass-lint'),
-	rmLines: require('gulp-rm-lines'),
-	compileSass: require('gulp-sass'),
-	compileJS: require('gulp-babel'),
-	concat: require('gulp-concat'),
-	lintES: require('gulp-eslint'),
-	newFile: require('gulp-file'),
-	sort: require('gulp-order'),
-	ssi: require('gulp-ssi'),
-},
+plugins = require('gulp-load-plugins')({
+	rename:{
+		'gulp-autoprefixer': 'prefixCSS',
+		'gulp-run-command': 'cli',
+		'gulp-html-lint': 'lintHTML',
+		'gulp-sass-lint': 'lintSass',
+		'gulp-webserver': 'server',
+		'gulp-htmlmin': 'compileHTML',
+		'gulp-eslint': 'lintES',
+		'gulp-babel': 'compileJS',
+		'gulp-order': 'sort',
+		'gulp-sass': 'compileSass',
+		'gulp-file': 'newFile',
+	},
+	postRequireTransforms:{
+		cli(cli) {
+			return cli.default
+		},
+	},
+}),
 
 options = {
 	compileJS:{
@@ -469,7 +472,7 @@ gulp.task('serve', () => {
 })
 
 gulp.task('generate:page', gulp.series(
-	cli([
+	plugins.cli([
 		`mkdir -pv ./src/pages/${argv.name}`,
 		`touch -a ./src/pages/${argv.name}/${argv.name}.html`,
 		`touch -a ./src/pages/${argv.name}/${argv.name}.scss`,
@@ -491,13 +494,13 @@ angular.module('${camelCase('page-'+argv.name)}')
 			.pipe(gulp.dest(`./src/pages/${argv.name}`))
 	},
 	// TODO: Add to app.module.js
-	cli([
+	plugins.cli([
 		`git status`,
 	])
 ))
 
 gulp.task('generate:component', gulp.series(
-	cli([
+	plugins.cli([
 		`mkdir -pv src/components/${argv.name}`,
 		`touch -a src/components/${argv.name}/${argv.name}.html`,
 		`touch -a src/components/${argv.name}/${argv.name}.scss`,
@@ -519,7 +522,7 @@ angular.module('${camelCase('comp-'+argv.name)}')
 			.pipe(gulp.dest(`./src/components/${argv.name}`))
 	},
 	// TODO: Add to app.module.js
-	cli([
+	plugins.cli([
 		`git status`,
 	])
 ))
