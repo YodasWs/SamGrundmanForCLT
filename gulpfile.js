@@ -90,7 +90,15 @@ options = {
 		]
 	},
 	compileSass:{
-		outputStyle: 'compressed'
+		importer: require('@mightyplow/sass-dedup-importer'),
+		outputStyle: 'compressed',
+		includePaths: [
+			'node_modules',
+			'src/scss',
+		],
+	},
+	stripCssComments:{
+		preserve: false,
 	},
 	compileHTML:{
 		collapseWhitespace: true,
@@ -277,7 +285,7 @@ options = {
 	rmLines:{
 		css:{
 			filters:[
-				/^@import /,
+				/^\s*$/,
 			]
 		},
 		js:{
@@ -305,7 +313,7 @@ options = {
 	},
 	sort:{
 		css:[
-			'css/**/*.{sa,sc,c}ss',
+			'scss/**/*.{sa,sc,c}ss',
 			'main.scss',
 			'components/**/*.{sa,sc,c}ss',
 			'**/*.{sa,sc,c}ss',
@@ -370,8 +378,9 @@ function runTasks(task) {
 			'lintSass',
 			'sort',
 			'concat',
-			'rmLines',
 			'compileSass',
+			'stripCssComments',
+			'rmLines',
 			'prefixCSS',
 		],
 		fileType: 'css'
@@ -408,6 +417,7 @@ function runTasks(task) {
 	{
 		name: 'transfer:assets',
 		src: [
+			'./node_modules/font-awesome/fonts/fontawesome-webfont.*',
 			'./src/**/*.jp{,e}g',
 			'./src/**/*.json',
 			'./src/**/*.gif',

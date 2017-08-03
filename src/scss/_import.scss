@@ -1,0 +1,22 @@
+@import 'colors';
+
+@import 'font-awesome/scss/variables';
+@import 'font-awesome/scss/mixins';
+@import 'font-awesome/scss/path';
+
+// I find it silly to require an extra class when we can just do this
+// @import 'font-awesome/scss/core';
+[class^='#{$fa-css-prefix}-'],
+[class*=' #{$fa-css-prefix}-'] {
+	@include fa-icon;
+}
+
+@import 'font-awesome/scss/larger';
+@import 'font-awesome/scss/fixed-width';
+// @import 'font-awesome/scss/list';
+// @import 'font-awesome/scss/bordered-pulled';
+// @import 'font-awesome/scss/animated';
+@import 'font-awesome/scss/rotated-flipped';
+@import 'font-awesome/scss/stacked';
+@import 'font-awesome/scss/icons';
+// @import 'font-awesome/scss/screen-reader';
