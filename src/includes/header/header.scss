@@ -27,5 +27,11 @@ body > nav {
 
 	.icons > a {
 		margin-left: 1em;
+		transition: font-size 200ms;
+		vertical-align: middle;
+
+		&:hover {
+			font-size: 1.2em;
+		}
 	}
 }
