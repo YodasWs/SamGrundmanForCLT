@@ -668,6 +668,7 @@ body > nav {\n\tdisplay: flex;\n\tflex-flow: row wrap;\n\tjustify-content: space
 gulp.task('default', gulp.series(
 	'lint',
 	'compile',
-	'serve',
-	'watch'
+	'serve'
+	// Bash on Windows can't do watch=>compile and livereload at the same time >_<
+//	,'watch'
 ))
