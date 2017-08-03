@@ -1,5 +1,8 @@
 @import 'colors';
 
+$fa-font-path: './';
+$fa-font-size-base: 1em;
+
 @import 'font-awesome/scss/variables';
 @import 'font-awesome/scss/mixins';
 @import 'font-awesome/scss/path';

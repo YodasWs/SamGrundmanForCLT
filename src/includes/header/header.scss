@@ -3,6 +3,7 @@
 body > header {
 	color: $header-color;
 	background: $header-bg;
+	text-align: center;
 
 	h1 {
 		margin: 0;
@@ -22,9 +23,5 @@ body > nav {
 
 	> * {
 		display: block;
-	}
-
-	&[hidden] {
-		display: none;
 	}
 }
