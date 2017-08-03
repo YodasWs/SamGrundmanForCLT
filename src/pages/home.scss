@@ -1,27 +1,40 @@
-.btn-big {
+a:link.btn-big {
 	display: block;
 	clear: both;
 	margin: 1rem auto;
 	width: 50%;
 	min-width: 200px;
 	max-width: 500px;
-	border: 1px solid black;
+	border: 1px solid $btn-big-color;
 	border-radius: 10px;
 	padding: 10px;
 	text-align: center;
-	background: whitesmoke;
+	background: $color-1;
+	color: $btn-big-color;
+	text-decoration: none;
 	transition: all 500ms;
 	position: relative;
 	top: 0;
 	left: 0;
-	box-shadow: 0 0 0 0 black;
+	box-shadow: 0 0 0 0 $btn-big-color;
 
 	&:hover {
-		background: lightblue;
+		background: $color-2;
 		font-size: 1.3em;
 		padding: 15px;
 		top: -5px;
 		left: -5px;
-		box-shadow: 5px 5px 0 0 black;
+		box-shadow: 5px 5px 0 0 $btn-big-color;
+	}
+}
+
+a:visited.btn-big {
+	color: $btn-big-color;
+}
+
+[ng-view='pageHome'] {
+	em {
+		font-style: normal;
+		text-decoration: underline;
 	}
 }

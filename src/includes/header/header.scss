@@ -1,16 +1,10 @@
 @import 'import';
 
 body > header {
-	color: $header-color;
-	background: $header-bg;
 	text-align: center;
 
 	h1 {
 		margin: 0;
-	}
-
-	h2 {
-		color: $header-second-color;
 	}
 }
 

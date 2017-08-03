@@ -7,21 +7,60 @@
 html {
 	height: 100%;
 	width: 100%;
-	background: whitesmoke;
+	background: $page-bg;
 }
 
 body {
 	margin: 0 auto;
 	width: 100%;
-	max-width: 1200px;
-	border: solid black;
-	border-width: 0 1px;
 	min-height: 100%;
-	background: white;
+	overflow-x: hidden;
 
 	> * {
 		padding: 5px calc(5px * 2.5);
 	}
+}
+
+body > nav,
+body > header,
+main > section {
+	width: 100%;
+	max-width: 600px;
+	margin-right: auto;
+	margin-left: auto;
+	position: relative;
+}
+
+body > nav,
+main > section:nth-child(odd) {
+	background: $section-bg;
+}
+
+body > header {
+	background: $color-1;
+}
+
+@mixin wide-background {
+	display: block;
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: calc(50% - 50vw);
+	left: calc(50% - 50vw);
+	top: 0;
+	z-index: -1;
+	background: inherit;
+}
+
+body > nav::before,
+body > header::before,
+main > section::before {
+	@include wide-background;
+}
+
+main {
+	padding: 0;
+	overflow: hidden;
 }
 
 h1,
@@ -35,10 +74,14 @@ h6 {
 
 a:link,
 a:visited {
-	color: dodgerblue;
+	color: $color-link;
 }
 
 p {
 	text-align: justify;
 	text-indent: 0.5in;
+}
+
+abbr.no-style {
+	text-decoration: none;
 }

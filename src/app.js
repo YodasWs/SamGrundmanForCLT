@@ -6,6 +6,9 @@ angular.module('myBooks', [
 .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl: 'pages/home.html',
+		controller: function() {
+			angular.element('[ng-view]').attr('ng-view', 'pageHome')
+		},
 	})
 	.otherwise({redirectTo: '/'})
 }])

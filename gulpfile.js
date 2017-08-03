@@ -371,6 +371,7 @@ function runTasks(task) {
 		name: 'compile:sass',
 		src: [
 			'src/**/*.{sa,sc,c}ss',
+			'!src/scss/*.{sa,sc,c}ss',
 			'!**/*.min.css',
 			'!**/min.css'
 		],
