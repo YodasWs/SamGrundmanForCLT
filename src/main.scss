@@ -8,6 +8,7 @@ html {
 	height: 100%;
 	width: 100%;
 	background: $page-bg;
+	color: $txt-color;
 }
 
 body {
@@ -15,10 +16,6 @@ body {
 	width: 100%;
 	min-height: 100%;
 	overflow-x: hidden;
-
-	> * {
-		padding: 5px calc(5px * 2.5);
-	}
 }
 
 body > nav,
@@ -29,6 +26,7 @@ main > section {
 	margin-right: auto;
 	margin-left: auto;
 	position: relative;
+	padding: 5px calc(5px * 2.5);
 }
 
 body > nav,
