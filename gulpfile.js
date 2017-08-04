@@ -532,7 +532,7 @@ gulp.task('generate:component', gulp.series(
 	() => {
 		const str = `'use strict';\n
 angular.module('${camelCase('comp-'+argv.name)}')
-.component('${camelCase('comp-'+argv.name)}', {
+.component('${camelCase(argv.name)}', {
 \ttemplateUrl: 'components/${argv.name}/${argv.name}.html',
 \tcontroller() {
 \t}
