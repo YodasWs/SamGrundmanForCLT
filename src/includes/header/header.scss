@@ -8,7 +8,8 @@ body > header {
 	}
 }
 
-body > nav {
+body > nav,
+body > footer {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
@@ -17,15 +18,5 @@ body > nav {
 
 	> * {
 		display: block;
-	}
-
-	.icons > a {
-		margin-left: 1em;
-		transition: font-size 200ms;
-		vertical-align: middle;
-
-		&:hover {
-			font-size: 1.2em;
-		}
 	}
 }

@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('myBooks', [
+	'compSocialLinks',
 	'ngRoute',
 ])
 .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

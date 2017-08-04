@@ -1,0 +1,13 @@
+social-links {
+	display: block;
+
+	> a {
+		margin-left: 1em;
+		transition: font-size 200ms;
+		vertical-align: middle;
+
+		&:hover {
+			font-size: 1.2em;
+		}
+	}
+}

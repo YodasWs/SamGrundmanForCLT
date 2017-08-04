@@ -19,6 +19,7 @@ body {
 }
 
 body > nav,
+body > footer,
 body > header,
 main > section {
 	width: 100%;
@@ -30,6 +31,7 @@ main > section {
 }
 
 body > nav,
+body > footer,
 main > section:nth-child(odd) {
 	background: $section-bg;
 }
@@ -51,6 +53,7 @@ body > header {
 }
 
 body > nav::before,
+body > footer::before,
 body > header::before,
 main > section::before {
 	@include wide-background;
@@ -82,4 +85,10 @@ p {
 
 abbr.no-style {
 	text-decoration: none;
+}
+
+body > footer {
+	small {
+		font-size: 0.7em;
+	}
 }
