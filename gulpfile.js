@@ -505,7 +505,7 @@ gulp.task('generate:page', gulp.series(
 		const str = `'use strict';\n
 angular.module('${camelCase('page-'+argv.name)}')
 .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-	$routeProvider.when('/${argv.name}', {
+	$routeProvider.when('/${argv.name}/', {
 		templateUrl: 'pages/${argv.name}/${argv.name}.html',
 	})
 }])\n`
